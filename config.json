@@ -1,6 +1,6 @@
 {
   "token":"TOKEN HERE",
-  "prefix":"PREFix HERE",
+  "prefix":"PREFIX HERE",
   "password":"PASSWORD HERE",
 
   "tts_language":"en",
