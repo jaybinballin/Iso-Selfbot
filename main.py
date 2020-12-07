@@ -503,7 +503,7 @@ async def nuke(ctx):
   embed.add_field(name="`Massk",value="mass kicks every user in guild", inline = False)
   embed.add_field(name="`Karma",value="destroys opps server", inline = False)
   embed.add_field(name="`Tokenfuck",value="disables passed token", inline = False)
-  embed.add_field(name="Tokeninfo",value="checks passed token", inline = False)
+  embed.add_field(name="`Tokeninfo",value="checks passed token", inline = False)
   embed.add_field(name="`Ctc",value="creates 250 text channels", inline = False)
   embed.add_field(name="`Cvc",value="creates 250 voice channels", inline = False)
   await ctx.send(embed=embed)
