@@ -158,20 +158,14 @@ colorama.init()
 Iso = discord.Client()
 Iso = commands.Bot(description='Iso Selfbot', command_prefix=prefix, self_bot=True)
 
-Iso.antiraid = False
 Iso.msgsniper = True
 Iso.slotbot_sniper = True
 Iso.giveaway_sniper = True
-Iso.mee6 = False
-Iso.mee6_channel = None
-Iso.yui_kiss_user = None
-Iso.yui_kiss_channel = None
-Iso.yui_hug_user = None
-Iso.yui_hug_channel = None
 Iso.sniped_message_dict = {}
 Iso.sniped_edited_message_dict = {}
-Iso.whitelisted_users = {}
 Iso.copycat = None
+
+
 Iso.remove_command('help')
 
 # Bans Anybody Who Bans In Guild
