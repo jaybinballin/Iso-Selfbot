@@ -72,7 +72,6 @@ locales = [
     "ja", "zh-TW",
     "ko"
 ]
-
 m_numbers = [
     ":one:",
     ":two:", 
@@ -529,6 +528,7 @@ async def fun(ctx):
   embed.add_field(name="Serverpfp",value="returns guilds current icon", inline = False)
   embed.add_field(name="`Whois",value="returns mentioned users information", inline = False)
   embed.add_field(name="`Av",value="returns mentioned users pfp", inline = False)
+  embed.add_field(name="`Everyone",value="pings everyone", inline=False)
   await ctx.send(embed=embed)
 
 @Iso.command()   
@@ -567,7 +567,7 @@ async def iso(ctx):
   embed.set_author(name="𝙄𝙎𝙊 𝘾𝙊𝙈𝙈𝘼𝙉𝘿𝙎")
   embed.set_thumbnail(url=Iso.user.avatar_url)
   embed.set_footer(text="𝘍𝘦𝘦𝘭 𝘓𝘪𝘬𝘦 𝘔𝘶𝘳𝘥𝘢")
-  embed.add_field(name="`Anti",value="sends murda's {Irregular Anti Nuke} link", inline = False)
+  embed.add_field(name="`Nitro",value="generates random nitro code", inline = False)
   embed.add_field(name="`Ping",value="returns bot's latency", inline = False)
   embed.add_field(name="`Leavegc",value="leaves all groups you're in", inline = False)
   embed.add_field(name="`Prefix {Your Choice}",value="changes prefix to what you want", inline = False)
@@ -1063,16 +1063,6 @@ async def purge(ctx, limit:int):
   await asyncio.sleep(3)
   await ctx.message.delete()    
 
-@Iso.command()
-async def anti(ctx):
-  await ctx.message.delete()
-  embed = discord.Embed(color=(0xffffff), timestamp=ctx.message.created_at)
-  embed.title=("*IRREGULAR INVITE REQUESTED*")
-  embed.set_thumbnail(url="https://media.discordapp.net/attachments/774419525680365608/778422356066304080/image1-2.jpg?width=356&height=417")
-  embed.description=f"[INVITE LINK](https://discord.com/api/oauth2/authorize?client_id=776551517888446484&permissions=8&scope=bot)"
-  embed.set_footer(text=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-  await ctx.send(embed=embed)
-
 @Iso.command(aliases=["logout"])
 async def shutdown(ctx):
     await ctx.message.delete()
@@ -1157,6 +1147,17 @@ async def top5(ctx):
   embed.add_field(name="AP",value="𝘖𝘳", inline = False)
   embed.add_field(name="Nick",value="𝘈𝘭𝘪𝘷𝘦", inline = False)
   await ctx.send(embed=embed)
+
+@Iso.command(aliases=["nitrogen"])
+async def nitro(ctx):
+    await ctx.message.delete()
+    await ctx.send(Nitro())
+
+
+@Iso.command()
+async def everyone(ctx):
+    await ctx.message.delete()
+    await ctx.send('https://@everyone@google.com')
 
 if __name__ == '__main__':
     Init()
