@@ -1,0 +1,11 @@
+{
+  "token":"TOKEN HERE",
+  "prefix":"PREFix HERE",
+  "password":"PASSWORD HERE",
+
+  "tts_language":"en",
+  "nitro_sniper":true,
+
+  "stream_url":"https://twitch.tv/teegrizzley",
+  "giveaway_sniper":true
+}
